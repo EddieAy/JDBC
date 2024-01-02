@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Login {
+public class NewLogin {
     public static void main(String[] args) {
         Map<String, String> userInfoPassword = initUI();
 
@@ -26,7 +26,7 @@ public class Login {
     private static boolean loginMethod(Map<String, String> userInfoPassword) {
         boolean loginSuccess = false;
         Connection connection = null;
-        Statement statement = null;
+        PreparedStatement ps = null;
         ResultSet resultSet = null;
 
         try {
@@ -38,12 +38,14 @@ public class Login {
             String password = "zera";
             connection = DriverManager.getConnection(url,user,password);
             //3.Create statement
-            statement = connection.createStatement();
+            String sql = "select * from costumer where name = ? and password = ?";
+            ps = connection.prepareStatement(sql);
+            ps.setString(1,userInfoPassword.get("UserName"));
+            ps.setString(2,userInfoPassword.get("Password"));
+
             //4.执行sql
-            String sql = String.format("select * from costumer where name = '%s' and password = '%s'",
-                    userInfoPassword.get("UserName"),userInfoPassword.get("Password"));
-            resultSet = statement.executeQuery(sql);
-            //select * from costumer where name = 'Emma' and password = 'qweqe' or '1=1'
+            resultSet = ps.executeQuery();
+            //select * from costumer where name = 'Emma' and password = '   qweqe' or '1'='1  '
             //qweqe' or '1=
 //            5.返回集合
             if (resultSet.next()){
@@ -69,9 +71,9 @@ public class Login {
                     throw new RuntimeException(e);
                 }
             }
-            if (statement != null) {
+            if (ps != null) {
                 try {
-                    statement.close();
+                    ps.close();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

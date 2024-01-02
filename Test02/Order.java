@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Login {
+public class Order {
     public static void main(String[] args) {
-        Map<String, String> userInfoPassword = initUI();
+        Map<String, String> userOrder = initUI();
 
-        boolean loginSuccess = loginMethod(userInfoPassword);
+        boolean loginSuccess = loginMethod(userOrder);
 
         System.out.println(loginSuccess ? "Login Success":"Login Fail");
 
@@ -20,14 +20,15 @@ public class Login {
 
     /**
      * 表示用于登录状态
-     * @param userInfoPassword
+     * @param userOrder
      * @return true表示登录成功 false表示登录失败
      */
-    private static boolean loginMethod(Map<String, String> userInfoPassword) {
+    private static boolean loginMethod(Map<String, String> userOrder) {
         boolean loginSuccess = false;
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String keywords = userOrder.get("Order");
 
         try {
             //1.初始化驱动
@@ -38,16 +39,16 @@ public class Login {
             String password = "zera";
             connection = DriverManager.getConnection(url,user,password);
             //3.Create statement
+            String sql = "select ename from emp order by ename " + keywords;
             statement = connection.createStatement();
+
             //4.执行sql
-            String sql = String.format("select * from costumer where name = '%s' and password = '%s'",
-                    userInfoPassword.get("UserName"),userInfoPassword.get("Password"));
-            resultSet = statement.executeQuery(sql);
-            //select * from costumer where name = 'Emma' and password = 'qweqe' or '1=1'
+            //select * from costumer where name = 'Emma' and password = '   qweqe' or '1'='1  '
             //qweqe' or '1=
 //            5.返回集合
-            if (resultSet.next()){
-                loginSuccess = true;
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()){
+                System.out.println(resultSet.getString("ename"));
             }
 
             return loginSuccess;
@@ -88,15 +89,13 @@ public class Login {
 
     private static Map<String, String> initUI() {
         Scanner s = new Scanner(System.in);
-        System.out.println("UserName:");
-        String username = s.nextLine();
-        System.out.println("Password:");
-        String password = s.nextLine();
-        Map<String,String> userInfoPassword = new HashMap<>();
-        userInfoPassword.put("UserName",username);
-        userInfoPassword.put("Password",password);
+        System.out.println("输入ASC升序,DESC降序:");
+        String order = s.nextLine();
+        
+        Map<String,String> userOrder = new HashMap<>();
+        userOrder.put("Order",order);
 
 
-        return userInfoPassword;
+        return userOrder;
     }
 }
