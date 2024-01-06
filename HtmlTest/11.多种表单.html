@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多种表单</title>
+</head>
+<body>
+<!--    get方式 用户提交的信息会显示到地址栏上-->
+<!--    post方式 不会显示在地址栏上
+        默认是get
+        -->
+    <form action="https://localhost:8080/jd/login">
+        用户名<input type="text" name="username"><br>
+        密码<input type="password" name="password"><br>
+        确认密码<input type="password" ><br>
+        性别<input type="radio" name="gender" value="1" checked>男
+        <input type="radio" name="gender" value="0">女 <br>
+        兴趣爱好<input type="checkbox" name="hobby" value="body_building">健身
+        <input type="checkbox" name="hobby" value="study">学习
+        <input type="checkbox" name="hobby" value="guitar">吉他
+        <input type="checkbox" name="hobby" value="travel">旅游
+        <input type="checkbox" name="hobby" value="invest">理财<br>
+        学历<select name="scholar">
+                <option value="primary">小学</option>
+                <option value="junior_high">初中</option>
+                <option value="senior_high">高中</option>
+                <option value="bachelor" selected>本科</option>
+                <option value="master">硕士</option>
+                <option value="phd">博士</option>
+            </select><br>
+        简介<textarea rows="10" cols="30" name="introduce"></textarea><br>
+        <input type="submit" value="提交">
+        <input type="reset" value="清空">
+<!--        https://localhost:8080/jd/login?username=123&password=123&gender=1&hobby=body_building&hobby=study&hobby=guitar&hobby=travel&hobby=invest&scholar=master&introduce=123-->
+    </form>
+
+    <a href="https://google.com/jd/login?username=123&password=1234">超链接也可以提交，是get请求</a>
+</body>
+</html>
