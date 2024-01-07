@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        /*标签选择器*/
+        /*标签选择器  范围更大*/
         body {
             background-color: lightblue;
         }
@@ -14,20 +14,45 @@
     </style>
 
     <style>
-        /*id选择器*/
+        div {
+            background-color: cornflowerblue;
+            border: 1px fuchsia;
+            width: 100px;
+            left: 100px;
+        }
+    </style>
+
+    <style>
+        /*id选择器  只能作用于这一个id*/
         #unique-paragraph {
             color: red;
             font-size: 18px;
         }
     </style>
+
+    <style>
+        .bd{
+            border: 10px saddlebrown;
+            width: 400px;
+            height: 30px;
+        }
+    </style>
 </head>
 <body>
 
-<h1>这是一个标题</h1>
-<p>这是一个段落。</p>
+    <h1>这是一个标题</h1>
+    <p>这是一个段落。</p>
 
-<p id="unique-paragraph">这是一个具有特定ID的段落。</p>
-<p>这是一个普通段落，没有应用ID选择器的样式。</p>
+    <p id="unique-paragraph">这是一个具有特定ID的段落。</p>
+    <p>这是一个普通段落，没有应用ID选择器的样式。</p>
+
+    <div></div>
+
+    <input type="text" class="bd">
+    <select class="bd">
+        <option>带专</option>
+        <option>长江学者</option>
+    </select>
 
 </body>
 </html>
